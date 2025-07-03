@@ -22,12 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return List.of();
+        return userRepository.findAll();
     }
 
     @Override
     public User findById(Long id) {
-        return null;
+        return userRepository.findById(id).get();
     }
 
     @Override

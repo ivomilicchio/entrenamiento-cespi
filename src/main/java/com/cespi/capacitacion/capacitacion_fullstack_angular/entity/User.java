@@ -2,20 +2,36 @@ package com.cespi.capacitacion.capacitacion_fullstack_angular.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(
-            strategy = GenerationType.AUTO)
+            strategy = GenerationType.AUTO
+    )
     private Long id;
+
     @Column(
-            unique = true,
             length = 10,
-            nullable = false)
+            unique = true,
+            nullable = false
+    )
     private String phoneNumber;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_number_plates",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "number_plates_id")
+    )
+    private List<NumberPlate> numberPlates;
+
+    @OneToOne
+    @JoinColumn(name = "current_account_id")
+    private CurrentAccount currentAccount;
 
     public User() {
 
