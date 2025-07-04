@@ -2,6 +2,7 @@ package com.cespi.capacitacion.capacitacion_fullstack_angular.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,11 +16,16 @@ public class User {
     private Long id;
 
     @Column(
-            length = 10,
             unique = true,
-            nullable = false
+            nullable = false,
+            length = 10
     )
     private String phoneNumber;
+
+    @Column(
+            nullable = false
+    )
+    private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
@@ -37,9 +43,12 @@ public class User {
 
     }
 
-    public User(long id, String phoneNumber) {
+    public User(long id, String phoneNumber, String password) {
         this.id = id;
         this.phoneNumber = phoneNumber;
+        this.password = password;
+        numberPlates = new ArrayList<NumberPlate>();
+        currentAccount = new CurrentAccount();
     }
 
     public long getId() {
@@ -56,5 +65,21 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<NumberPlate> getNumberPlates() {
+        return numberPlates;
+    }
+
+    public void setNumberPlates(List<NumberPlate> numberPlates) {
+        this.numberPlates = numberPlates;
+    }
+
+    public CurrentAccount getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(CurrentAccount currentAccount) {
+        this.currentAccount = currentAccount;
     }
 }

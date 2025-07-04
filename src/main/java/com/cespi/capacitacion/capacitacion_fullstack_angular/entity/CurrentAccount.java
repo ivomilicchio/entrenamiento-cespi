@@ -16,4 +16,24 @@ public class CurrentAccount {
             nullable = false
     )
     private float balance;
+
+    public CurrentAccount() {
+        this.balance = 0;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 }
