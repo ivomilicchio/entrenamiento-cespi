@@ -35,7 +35,7 @@ public class User {
     )
     private List<NumberPlate> numberPlates;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_account_id")
     private CurrentAccount currentAccount;
 
@@ -43,8 +43,7 @@ public class User {
 
     }
 
-    public User(long id, String phoneNumber, String password) {
-        this.id = id;
+    public User(String phoneNumber, String password) {
         this.phoneNumber = phoneNumber;
         this.password = password;
         numberPlates = new ArrayList<NumberPlate>();
@@ -65,6 +64,14 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<NumberPlate> getNumberPlates() {

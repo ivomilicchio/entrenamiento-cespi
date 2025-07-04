@@ -19,8 +19,7 @@ public class NumberPlate {
 
     }
 
-    public NumberPlate(Long id, String number) {
-        this.id = id;
+    public NumberPlate(String number) {
         this.number = number;
     }
 
