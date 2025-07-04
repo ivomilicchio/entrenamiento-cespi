@@ -21,14 +21,14 @@ public class NumberPlateServiceImpl implements NumberPlateService {
     public NumberPlate save(String number) {
         String sanitizedNumber = sanitizeNumberPlate(number);
         if (!validFormat(sanitizedNumber)) {
-            return null;
+            return null; //MANEJAR EXCEPCIONES ACA
         }
         NumberPlate numberPlate = new NumberPlate(sanitizedNumber);
         return numberPlateRepository.save(numberPlate);
     }
 
     private String sanitizeNumberPlate(String number) {
-        return number.toUpperCase().replaceAll("\\s+", "");
+        return number.toUpperCase().replaceAll("[\\s-]", "");
     }
 
     private boolean validFormat(String number) {

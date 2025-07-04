@@ -5,7 +5,10 @@ import com.cespi.capacitacion.capacitacion_fullstack_angular.repository.UserRepo
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,7 +21,21 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public User save(String phoneNumber, String password) {
-        User user = new User(phoneNumber, password);
+        String sanitizedPhoneNumber = sanitizePhoneNumber(phoneNumber);
+        if (!validFormat(sanitizedPhoneNumber)) {
+            return null; //MANEJAR EXCEPCIONES ACA
+        }
+        User user = new User(sanitizedPhoneNumber, password);
         return userRepository.save(user);
+    }
+
+    private String sanitizePhoneNumber(String phoneNumber) {
+        return phoneNumber.replaceAll("[\\s-]", "");
+    }
+
+    private boolean validFormat(String phoneNumber) {
+        Pattern pattern = Pattern.compile("[0-9]{10}");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.matches();
     }
 }
